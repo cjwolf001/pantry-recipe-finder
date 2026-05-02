@@ -7,14 +7,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const model = process.env.OPENAI_MODEL || "gpt-5-nano";
 
-const ingredientSchema = z.object({
-  name: z.string().trim().min(1).max(80),
-  quantity: z.string().trim().max(40).optional().default(""),
-  unit: z.string().trim().max(40).optional().default(""),
-});
-
 const requestSchema = z.object({
-  ingredients: z.array(ingredientSchema).min(1).max(30),
+  pantryText: z.string().trim().min(3).max(2000),
   dietaryNotes: z.string().trim().max(300).optional().default(""),
 });
 
@@ -61,7 +55,7 @@ app.use(express.static("public"));
 app.post("/api/recipes", async (req, res) => {
   const parsed = requestSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ error: "Add at least one ingredient, up to 30 total." });
+    return res.status(400).json({ error: "Tell me what ingredients you have first." });
   }
 
   if (!process.env.OPENAI_API_KEY) {
@@ -71,9 +65,6 @@ app.post("/api/recipes", async (req, res) => {
   }
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-  const ingredientList = parsed.data.ingredients
-    .map((item) => `${item.quantity} ${item.unit} ${item.name}`.replace(/\s+/g, " ").trim())
-    .join("\n");
 
   try {
     const response = await client.responses.create({
@@ -87,9 +78,9 @@ app.post("/api/recipes", async (req, res) => {
         },
         {
           role: "user",
-          content: `Ingredients available:\n${ingredientList}\n\nDietary notes or preferences: ${
+          content: `The user described their available ingredients like this:\n${parsed.data.pantryText}\n\nDietary notes or preferences: ${
             parsed.data.dietaryNotes || "none"
-          }\n\nReturn recipes the user can reasonably make now.`,
+          }\n\nInfer ingredients and quantities from the casual text when possible. Return recipes the user can reasonably make now.`,
         },
       ],
       text: {

@@ -21,12 +21,8 @@
           <p class="eyebrow">Kitchen-first recipe matching</p>
           <h1 id="page-title">Pantry Recipe Finder</h1>
           <p class="lede">
-            Enter what you have, add quantities if you know them, and get recipes that fit the food already in your kitchen.
+            Tell it what you have in plain English, and get recipes that fit the food already in your kitchen.
           </p>
-        </div>
-        <div class="hero-panel" aria-label="Current model and security note">
-          <span class="status-dot"></span>
-          <span>Server-side OpenAI calls keep the API key out of browser code.</span>
         </div>
       </section>
 
@@ -34,15 +30,19 @@
         <form id="ingredient-form" class="input-panel">
           <div class="panel-heading">
             <div>
-              <h2>Ingredients</h2>
-              <p>Add pantry, fridge, and freezer items.</p>
+              <h2>What do you have?</h2>
+              <p>Write it casually, with quantities if you know them.</p>
             </div>
-            <button class="icon-button" type="button" id="add-row" aria-label="Add ingredient" title="Add ingredient">
-              <i data-lucide="plus"></i>
-            </button>
           </div>
 
-          <div class="ingredient-list" id="ingredient-list"></div>
+          <label class="pantry-field">
+            Ingredients
+            <textarea
+              id="pantry-text"
+              rows="9"
+              placeholder="Example: I have 6 eggs, a couple handfuls of spinach, half a block of cheddar, some tortillas, a can of black beans, rice, onions, and garlic."
+            ></textarea>
+          </label>
 
           <label class="notes-field">
             Dietary notes
@@ -68,7 +68,7 @@
           </div>
           <div id="empty-state" class="empty-state">
             <i data-lucide="utensils"></i>
-            <p>Add ingredients and run the finder to see recipe ideas.</p>
+            <p>Describe what you have and run the finder to see recipe ideas.</p>
           </div>
           <div id="loading-state" class="loading-state hidden">
             <span class="spinner"></span>

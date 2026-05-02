@@ -1,6 +1,6 @@
 # Pantry Recipe Finder
 
-A small full-stack recipe website where you enter ingredients and quantities, then get recipe ideas you can expand for exact cooking instructions.
+A small full-stack recipe website where you describe the ingredients you have in casual text, then get recipe ideas you can expand for exact cooking instructions.
 
 ## Why there is a server
 

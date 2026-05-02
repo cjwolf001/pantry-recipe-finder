@@ -1,6 +1,5 @@
-const ingredientList = document.querySelector("#ingredient-list");
-const addRowButton = document.querySelector("#add-row");
 const form = document.querySelector("#ingredient-form");
+const pantryText = document.querySelector("#pantry-text");
 const dietaryNotes = document.querySelector("#dietary-notes");
 const results = document.querySelector("#recipe-results");
 const emptyState = document.querySelector("#empty-state");
@@ -9,54 +8,10 @@ const errorState = document.querySelector("#error-state");
 const subtitle = document.querySelector("#results-subtitle");
 const submitButton = form.querySelector("button[type='submit']");
 
-const units = ["", "cups", "tbsp", "tsp", "oz", "lb", "g", "kg", "count", "cans", "cloves", "slices"];
-
-function icon(name) {
-  return `<i data-lucide="${name}"></i>`;
-}
-
 function refreshIcons() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
-}
-
-function addIngredientRow(defaults = {}) {
-  const row = document.createElement("div");
-  row.className = "ingredient-row";
-  row.innerHTML = `
-    <input aria-label="Ingredient name" class="ingredient-name" placeholder="Ingredient" value="${defaults.name || ""}" />
-    <input aria-label="Quantity" class="ingredient-quantity" placeholder="Qty" value="${defaults.quantity || ""}" />
-    <select aria-label="Unit" class="ingredient-unit">
-      ${units.map((unit) => `<option value="${unit}">${unit || "unit"}</option>`).join("")}
-    </select>
-    <button class="remove-row" type="button" aria-label="Remove ingredient" title="Remove ingredient">${icon("x")}</button>
-  `;
-
-  row.querySelector(".ingredient-unit").value = defaults.unit || "";
-  row.querySelector(".remove-row").addEventListener("click", () => {
-    if (ingredientList.children.length > 1) {
-      row.remove();
-    } else {
-      row.querySelectorAll("input").forEach((input) => {
-        input.value = "";
-      });
-      row.querySelector("select").value = "";
-    }
-  });
-
-  ingredientList.append(row);
-  refreshIcons();
-}
-
-function getIngredients() {
-  return [...ingredientList.querySelectorAll(".ingredient-row")]
-    .map((row) => ({
-      name: row.querySelector(".ingredient-name").value.trim(),
-      quantity: row.querySelector(".ingredient-quantity").value.trim(),
-      unit: row.querySelector(".ingredient-unit").value.trim(),
-    }))
-    .filter((item) => item.name);
 }
 
 function setBusy(isBusy) {
@@ -134,15 +89,13 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-addRowButton.addEventListener("click", () => addIngredientRow());
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const ingredients = getIngredients();
+  const pantryDescription = pantryText.value.trim();
 
-  if (!ingredients.length) {
+  if (!pantryDescription) {
     emptyState.classList.add("hidden");
-    showError("Add at least one ingredient first.");
+    showError("Tell me what ingredients you have first.");
     return;
   }
 
@@ -153,7 +106,7 @@ form.addEventListener("submit", async (event) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        ingredients,
+        pantryText: pantryDescription,
         dietaryNotes: dietaryNotes.value.trim(),
       }),
     });
@@ -169,10 +122,7 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-[
-  { name: "eggs", quantity: "6", unit: "count" },
-  { name: "spinach", quantity: "2", unit: "cups" },
-  { name: "cheddar", quantity: "4", unit: "oz" },
-].forEach(addIngredientRow);
+pantryText.value =
+  "I have 6 eggs, a couple handfuls of spinach, about 4 oz cheddar, tortillas, rice, onions, garlic, and a can of black beans.";
 
 refreshIcons();

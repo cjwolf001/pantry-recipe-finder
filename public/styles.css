@@ -44,9 +44,7 @@ select {
 
 .hero {
   min-height: 34vh;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 24px;
+  display: flex;
   align-items: end;
   padding: 26px 0 34px;
 }
@@ -80,29 +78,6 @@ h1 {
   color: #33443d;
   font-size: 1.15rem;
   line-height: 1.65;
-}
-
-.hero-panel {
-  width: min(310px, 100%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  border: 1px solid rgba(29, 122, 99, 0.25);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--accent-strong);
-  font-size: 0.9rem;
-  font-weight: 700;
-  box-shadow: var(--shadow);
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: var(--accent);
 }
 
 .workspace {
@@ -148,32 +123,7 @@ h1 {
   font-size: 0.9rem;
 }
 
-.icon-button {
-  width: 42px;
-  height: 42px;
-  display: inline-grid;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--accent-strong);
-  cursor: pointer;
-}
-
-.ingredient-list {
-  display: grid;
-  gap: 10px;
-}
-
-.ingredient-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) 88px 92px 38px;
-  gap: 8px;
-  align-items: center;
-}
-
-.ingredient-row input,
-.ingredient-row select,
+.pantry-field textarea,
 .notes-field textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -183,45 +133,39 @@ h1 {
   outline: none;
 }
 
-.ingredient-row input,
-.ingredient-row select {
-  height: 42px;
-  padding: 0 11px;
-}
-
-.ingredient-row input:focus,
-.ingredient-row select:focus,
+.pantry-field textarea:focus,
 .notes-field textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(29, 122, 99, 0.13);
 }
 
-.remove-row {
-  width: 38px;
-  height: 38px;
-  display: inline-grid;
-  place-items: center;
-  border: 0;
-  border-radius: 8px;
-  background: #f4e6df;
-  color: var(--tomato);
-  cursor: pointer;
-}
-
+.pantry-field,
 .notes-field {
   display: grid;
   gap: 8px;
-  margin-top: 18px;
   color: #394940;
   font-size: 0.9rem;
   font-weight: 700;
 }
 
+.notes-field {
+  margin-top: 18px;
+}
+
+.pantry-field textarea,
 .notes-field textarea {
   resize: vertical;
-  min-height: 86px;
   padding: 12px;
   font-weight: 500;
+  line-height: 1.55;
+}
+
+.pantry-field textarea {
+  min-height: 220px;
+}
+
+.notes-field textarea {
+  min-height: 86px;
 }
 
 .primary-action {
@@ -386,7 +330,6 @@ h1 {
 }
 
 @media (max-width: 900px) {
-  .hero,
   .workspace {
     grid-template-columns: 1fr;
   }
@@ -406,13 +349,7 @@ h1 {
     font-size: 3rem;
   }
 
-  .ingredient-row {
-    grid-template-columns: 1fr 74px 80px 36px;
-    gap: 6px;
-  }
-
-  .ingredient-row input,
-  .ingredient-row select {
-    padding: 0 8px;
+  .pantry-field textarea {
+    min-height: 190px;
   }
 }
