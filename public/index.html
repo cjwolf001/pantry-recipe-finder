@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pantry Recipe Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Kitchen-first recipe matching</p>
+          <h1 id="page-title">Pantry Recipe Finder</h1>
+          <p class="lede">
+            Enter what you have, add quantities if you know them, and get recipes that fit the food already in your kitchen.
+          </p>
+        </div>
+        <div class="hero-panel" aria-label="Current model and security note">
+          <span class="status-dot"></span>
+          <span>Server-side OpenAI calls keep the API key out of browser code.</span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Recipe finder">
+        <form id="ingredient-form" class="input-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Ingredients</h2>
+              <p>Add pantry, fridge, and freezer items.</p>
+            </div>
+            <button class="icon-button" type="button" id="add-row" aria-label="Add ingredient" title="Add ingredient">
+              <i data-lucide="plus"></i>
+            </button>
+          </div>
+
+          <div class="ingredient-list" id="ingredient-list"></div>
+
+          <label class="notes-field">
+            Dietary notes
+            <textarea
+              id="dietary-notes"
+              rows="3"
+              placeholder="Optional: vegetarian, no peanuts, quick dinner, high protein..."
+            ></textarea>
+          </label>
+
+          <button class="primary-action" type="submit">
+            <i data-lucide="chef-hat"></i>
+            Find recipes
+          </button>
+        </form>
+
+        <section class="results-panel" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <h2>Recipe Matches</h2>
+              <p id="results-subtitle">Results will appear here.</p>
+            </div>
+          </div>
+          <div id="empty-state" class="empty-state">
+            <i data-lucide="utensils"></i>
+            <p>Add ingredients and run the finder to see recipe ideas.</p>
+          </div>
+          <div id="loading-state" class="loading-state hidden">
+            <span class="spinner"></span>
+            <p>Building practical recipes from your list...</p>
+          </div>
+          <div id="error-state" class="error-state hidden"></div>
+          <div id="recipe-results" class="recipe-results"></div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

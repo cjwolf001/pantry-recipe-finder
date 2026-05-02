@@ -1,0 +1,23 @@
+{
+  "name": "pantry-recipe-finder",
+  "version": "1.0.0",
+  "description": "A small full-stack recipe finder that suggests recipes from ingredients on hand.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "openai": "^6.35.0",
+    "zod": "^4.4.2"
+  }
+}
