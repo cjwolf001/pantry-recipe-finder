@@ -69,7 +69,17 @@ app.post("/api/recipes", async (req, res) => {
   try {
     const response = await client.responses.create({
       model,
-      max_output_tokens: 1400,
+      max_output_tokens: 2200,
+      reasoning: { effort: "minimal" },
+      text: {
+        verbosity: "low",
+        format: {
+          type: "json_schema",
+          name: "recipe_results",
+          schema: recipeSchema,
+          strict: true,
+        },
+      },
       input: [
         {
           role: "system",
@@ -83,15 +93,11 @@ app.post("/api/recipes", async (req, res) => {
           }\n\nInfer ingredients and quantities from the casual text when possible. Return recipes the user can reasonably make now.`,
         },
       ],
-      text: {
-        format: {
-          type: "json_schema",
-          name: "recipe_results",
-          schema: recipeSchema,
-          strict: true,
-        },
-      },
     });
+
+    if (!response.output_text) {
+      throw new Error("OpenAI returned no recipe JSON.");
+    }
 
     const payload = JSON.parse(response.output_text);
     return res.json(payload);
