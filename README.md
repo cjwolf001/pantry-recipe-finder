@@ -31,7 +31,7 @@ The build copies the frontend from `public/` into `dist/`, which is the output d
 GitHub Pages is not a safe fit for this app because it only hosts static files and would expose the API key. Vercel Hobby works because `/api/recipes` runs as a serverless function and reads the key from Vercel environment variables.
 
 1. Import this GitHub repo into Vercel.
-2. Use the default project settings.
+2. In Project Settings, set Node.js Version to `20.x` or newer.
 3. Add these environment variables in Vercel, not in GitHub code:
 
 ```bash
