@@ -4,9 +4,10 @@
   "description": "A small full-stack recipe finder that suggests recipes from ingredients on hand.",
   "main": "server.js",
   "engines": {
-    "node": ">=20"
+    "node": "20.x"
   },
   "scripts": {
+    "build": "node scripts/build-static.js",
     "start": "node server.js",
     "dev": "node --watch server.js"
   },

@@ -18,6 +18,14 @@ Edit `.env` and set `OPENAI_API_KEY` to your current key. The default model is `
 
 Open <http://localhost:3000>.
 
+## Static build
+
+```bash
+npm run build
+```
+
+The build copies the frontend from `public/` into `dist/`, which is the output directory Vercel serves.
+
 ## Deploy to Vercel Hobby
 
 GitHub Pages is not a safe fit for this app because it only hosts static files and would expose the API key. Vercel Hobby works because `/api/recipes` runs as a serverless function and reads the key from Vercel environment variables.
