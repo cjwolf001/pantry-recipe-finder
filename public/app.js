@@ -122,7 +122,4 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-pantryText.value =
-  "I have 6 eggs, a couple handfuls of spinach, about 4 oz cheddar, tortillas, rice, onions, garlic, and a can of black beans.";
-
 refreshIcons();
