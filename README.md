@@ -18,16 +18,20 @@ Edit `.env` and set `OPENAI_API_KEY` to your current key. The default model is `
 
 Open <http://localhost:3000>.
 
-## Deploy from GitHub
+## Deploy to Vercel Hobby
 
-GitHub Pages is not a safe fit for this app because it only hosts static files and would expose the API key. Deploy the GitHub repo to a Node-capable host such as Render, Railway, Fly.io, or Vercel with a server runtime.
+GitHub Pages is not a safe fit for this app because it only hosts static files and would expose the API key. Vercel Hobby works because `/api/recipes` runs as a serverless function and reads the key from Vercel environment variables.
 
-Set these environment variables in the hosting provider, not in GitHub code:
+1. Import this GitHub repo into Vercel.
+2. Use the default project settings.
+3. Add these environment variables in Vercel, not in GitHub code:
 
 ```bash
 OPENAI_API_KEY=your_rotated_key
 OPENAI_MODEL=gpt-5-nano
 ```
+
+4. Deploy. The frontend in `public/` will call the Vercel serverless function at `/api/recipes`.
 
 ## Security note
 
